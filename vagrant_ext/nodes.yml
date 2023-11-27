@@ -1,0 +1,27 @@
+---
+# Application Specific
+- name: dc1
+  box: peru/windows-server-2019-standard-x64-eval
+  ip: 10.0.0.10
+- name: dc2
+  box: peru/windows-server-2019-standard-x64-eval
+  ip: 10.0.0.11
+  guest: windows
+- name: k8s1
+  box: generic/ubuntu2204
+  ip: 10.0.0.20
+- name: k8s2
+  box: generic/ubuntu2204
+  ip: 10.0.0.21
+- name: k8s3
+  box: generic/ubuntu2204
+  ip: 10.0.0.22
+
+# Generic Linux
+- name: ubuntu-2204
+  box: generic/ubuntu2204
+
+# Generic Windows
+- name: windows-server-2022
+  box: peru/windows-server-2022-standard-x64-eval
+  guest: windows
