@@ -1,0 +1,6 @@
+---
+firewall_enabled: true
+firewall_opened_ports:
+  - 22
+  - 80
+  - 443

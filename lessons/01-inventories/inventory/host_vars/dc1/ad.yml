@@ -1,0 +1,3 @@
+---
+dns_domain_name: corp.example.tld
+join_domain: false
