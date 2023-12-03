@@ -3,6 +3,7 @@ Vagrant.require_version ">= 2.4.0"
 require 'yaml'
 require_relative './vagrant_ext/linux'
 require_relative './vagrant_ext/windows'
+require_relative './vagrant_ext/provider'
 
 Vagrant.configure('2') do |config|
   config.hostmanager.enabled = true
@@ -12,9 +13,13 @@ Vagrant.configure('2') do |config|
   config.hostmanager.include_offline = false
 
   config.vagrant.plugins = [
-    'vagrant-hostmanager',
-    'vagrant-libvirt',
+    'vagrant-hostmanager'
   ]
+
+  provider = YAML.load_file('vagrant_ext/provider.yml') || 'libvirt'
+  if provider == 'libvirt'
+    config.vagrant.plugins.push('vagrant-libvirt')
+  endif
 
   nodes = YAML.load_file('vagrant_ext/nodes.yml') || {}
   nodes.each do |node|
@@ -37,9 +42,17 @@ Vagrant.configure('2') do |config|
         Windows.install_python host
       end
 
-      host.vm.provider :libvirt do |libvirt|
-        libvirt.cpus = ENV["LIBVIRT_CPUS"] || 2
-        libvirt.memory = ENV["LIBVIRT_MEMORY"] || 4096
+      case provider
+      when libvirt
+        host.vm.provider :libvirt do |libvirt|
+          libvirt.cpus = ENV["LIBVIRT_CPUS"] || 2
+          libvirt.memory = ENV["LIBVIRT_MEMORY"] || 4096
+        end
+      when hyperv
+        host.vm.provider :hyperv do |hyperv|
+          hyperv.cpus = ENV["LIBVIRT_CPUS"] || 2
+          hyperv.memory = ENV["LIBVIRT_MEMORY"] || 4096
+        end
       end
     end
   end

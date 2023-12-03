@@ -1,5 +1,6 @@
 .vagrant/
 .venv/
 .vscode/
-roles/
 communities/
+roles/
+vagrant_ext/provider.rb
