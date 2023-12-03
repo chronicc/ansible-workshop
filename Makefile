@@ -42,6 +42,7 @@ install: install-requirements .venv/bin/activate ## Install requirements for thi
 install-requirements: /etc/apt/trusted.gpg.d/hashicorp.gpg /etc/apt/sources.list.d/hashicorp.list
 	sudo apt update
 	sudo apt install --no-install-recommends -y build-essential python3 python3-dev python3-venv pkg-config libxml2-dev libxslt1-dev vagrant
+	@if [ "$(ON_WSL)" = "1" ]; then echo "[automount]\noptions = \"metadata\"" > /etc/wsl.conf; fi
 
 .venv/bin/activate: requirements.lock
 	python3 -m venv .venv
