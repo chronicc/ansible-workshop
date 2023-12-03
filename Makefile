@@ -5,6 +5,7 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .venv/bin/activate: requirements.lock
+	sudo apt install --no-install-recommends -y python3 python3-dev python3-venv
 	python3 -m venv .venv
 	./.venv/bin/pip install -U pip
 	./.venv/bin/pip install -r requirements.lock

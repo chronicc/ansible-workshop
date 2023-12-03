@@ -1,4 +1,6 @@
 Vagrant.require_version ">= 2.4.0"
+
+require 'yaml'
 require_relative './vagrant_ext/linux'
 require_relative './vagrant_ext/windows'
 
