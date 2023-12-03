@@ -3,4 +3,4 @@
 .vscode/
 communities/
 roles/
-vagrant_ext/provider.rb
+vagrant_ext/provider.yml

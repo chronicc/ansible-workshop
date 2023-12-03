@@ -11,10 +11,8 @@ endif
 ifeq ($(shell uname -r | grep -i 'wsl'),)
 	ON_WSL := 0
 	VAGRANT_PLUGINS += vagrant-libvirt
-	VM_PRODIDER := libvirt
 else
 	ON_WSL := 1
-	VM_PROVIDER := hyperv
 endif
 
 CMD_VAGRANT := $(shell command -v vagrant 2>/dev/null)
@@ -40,11 +38,10 @@ clean: ## Clean up the repository.
 install: install-requirements .venv/bin/activate ## Install requirements for this repository.
 	@if [ "$(CMD_VAGRANT)" = "" ]; then echo "No vagrant found. Please install vagrant for your host operatin system."; exit 1; fi
 	"$(CMD_VAGRANT)" plugin install vagrant-hostmanager $(VAGRANT_PLUGINS)
-	echo "$(VM_PROVIDER)" > ./vagrant_ext/provider.yml
 
 install-requirements: /etc/apt/trusted.gpg.d/hashicorp.gpg /etc/apt/sources.list.d/hashicorp.list
 	sudo apt update
-	sudo apt install --no-install-recommends -y build-essential python3 python3-dev python3-venv pkg-config libxml2-dev libxslt-dev vagrant
+	sudo apt install --no-install-recommends -y build-essential python3 python3-dev python3-venv pkg-config libxml2-dev libxslt1-dev vagrant
 
 .venv/bin/activate: requirements.lock
 	python3 -m venv .venv
